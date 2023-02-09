@@ -16,10 +16,14 @@ ul {
 
 li {
   list-style: none;
-  text-transform: capitalize;
+
   color: #70757a;
   font-size: 16px;
   line-height: 20px;
+}
+
+li::first-letter {
+  text-transform: capitalize;
 }
 
 .weather-app-wrapper {
