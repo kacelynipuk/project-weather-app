@@ -37,6 +37,8 @@ function formatDate(timestamp) {
 }
 
 function displayTemperature(response) {
+
+
   let cityElement = document.querySelector("#city");
   cityElement.innerHTML = response.data.city;
 
@@ -51,9 +53,16 @@ function displayTemperature(response) {
 
   let windElement = document.querySelector("#wind");
   windElement.innerHTML = Math.round(response.data.wind.speed);
+
   let dateElement = document.querySelector("#date");
   dateElement.innerHTML = formatDate(response.data.time * 1000); //to call function for calculating time
+
+  let iconElement = document.querySelector("#icon");
+  iconElement.setAttribute("src",`http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${(response.data.condition.icon)}.png`) //search change attribute of an element
+  iconElement.setAttribute("alt",response.data.condition.description);// no need `` nor
+
 }
 let apiKey = "2f63a97f4at8dac8o3e80889b0365010";
-let apiUrl = `https://api.shecodes.io/weather/v1/current?query=london&key=${apiKey}&units=metric`;
+let city = "london"; 
+let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
 axios.get(apiUrl).then(displayTemperature);
