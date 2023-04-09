@@ -37,7 +37,7 @@ function formatDate(timestamp) {
 }
 
 function displayTemperature(response) {
-
+  // console.log(reponse.data) to check the data;//
 
   let cityElement = document.querySelector("#city");
   cityElement.innerHTML = response.data.city;
@@ -58,11 +58,26 @@ function displayTemperature(response) {
   dateElement.innerHTML = formatDate(response.data.time * 1000); //to call function for calculating time
 
   let iconElement = document.querySelector("#icon");
-  iconElement.setAttribute("src",`http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${(response.data.condition.icon)}.png`) //search change attribute of an element
-  iconElement.setAttribute("alt",response.data.condition.description);// no need `` nor
-
+  iconElement.setAttribute(
+    "src",
+    `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`
+  ); //search change attribute of an element
+  iconElement.setAttribute("alt", response.data.condition.description); // no need ``
 }
-let apiKey = "2f63a97f4at8dac8o3e80889b0365010";
-let city = "london"; 
-let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
-axios.get(apiUrl).then(displayTemperature);
+
+function search(city) {
+  let apiKey = "2f63a97f4at8dac8o3e80889b0365010";
+
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+  // for axios to get API//
+  axios.get(apiUrl).then(displayTemperature);
+}
+
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInputElement = document.querySelector("#city-input");
+  search(cityInputElement.value);
+}
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
