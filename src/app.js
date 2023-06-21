@@ -36,7 +36,8 @@ function formatDate(timestamp) {
   return `${date} ${month} ${year} (${day}) ${hour}:${minute}`;
 }
 
-function displayForecast() {
+function displayForecast(response) {
+  console.log(response.data.daily);
   let forecastElement = document.querySelector("#forecast");
 
   let forecastHTML = `<div class="row">`;
@@ -66,6 +67,13 @@ function displayForecast() {
   console.log(forecastHTML); // to check the HTML
 }
 
+function getForecast(coordinates) {
+  console.log(coordinates);
+  let apiKey = "2f63a97f4at8dac8o3e80889b0365010";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?lat=${coordinates.latitude}&lon=${coordinates.longitude}&key=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
+
 function displayTemperature(response) {
   // console.log(reponse.data) to check the data;//
 
@@ -91,6 +99,7 @@ function displayTemperature(response) {
     `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`
   ); //search change attribute of an element
   iconElement.setAttribute("alt", response.data.condition.description); // no need ``
+  getForecast(response.data.coordinates); //get the coord for the city we search for, use the previous API result to get a API result
 }
 
 function search(city) {
@@ -137,4 +146,3 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
 search("London");
-displayForecast();
