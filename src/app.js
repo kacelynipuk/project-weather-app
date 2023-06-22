@@ -115,6 +115,7 @@ function displayTemperature(response) {
     `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`
   ); //search change attribute of an element
   iconElement.setAttribute("alt", response.data.condition.description); // no need ``
+  displayCelsiusTemperature({ preventDefault: function () {} });
   getForecast(response.data.coordinates); //get the coord for the city we search for, use the previous API result to get a API result
 }
 
